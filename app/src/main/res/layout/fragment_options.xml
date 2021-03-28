@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:background="@drawable/option2_background"
+    android:padding="20dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Options : "
+        android:shadowColor="@color/black"
+        android:shadowRadius='1'
+        android:shadowDy="2"
+        android:shadowDx="-5"
+        android:textColor="@color/pink100"
+        android:textSize="30sp"
+        android:layout_marginTop="60dp"
+        android:fontFamily="@font/lazer84"/>
+
+    <Switch
+        android:layout_marginTop="80dp"
+        android:id="@+id/switch_son"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ON / OFF GAME SOUND"
+        android:textColor="@color/pink200"
+        android:shadowColor="@color/black"
+        android:shadowRadius="1"
+        android:shadowDx="-5"
+        android:shadowDy="2"
+
+        android:textSize="25sp"
+        android:fontFamily="@font/lazer84"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    <Switch
+        android:layout_marginTop="30dp"
+        android:id="@+id/switch_music"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ON / OFF GAME MUSIC"
+        android:textColor="@color/pink200"
+        android:textSize="25sp"
+        android:shadowColor="@color/black"
+        android:shadowRadius='1'
+        android:shadowDy="2"
+        android:shadowDx="-5"
+        android:fontFamily="@font/lazer84"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/lazer84"
+        android:shadowColor="@color/black"
+        android:shadowDx="-5"
+        android:shadowDy="2"
+        android:shadowRadius='1'
+        android:text="Player Skin :"
+        android:textColor="@color/pink100"
+        android:textSize="25sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="50dp">
+
+        <ImageButton
+            android:id="@+id/left_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_chevron_left_24"
+            android:layout_gravity="center_vertical"
+            android:backgroundTint="@color/pink100" />
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="180dp"
+            android:src="@drawable/playership2" />
+        <ImageButton
+            android:id="@+id/right_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_chevron_right_24"
+            android:layout_gravity="center_vertical"
+            android:textSize="20dp"
+            android:backgroundTint="@color/pink100"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/confirm_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
+        android:backgroundTint="@color/pink100"
+        android:fontFamily="@font/lazer84"
+        android:shadowColor="@color/black"
+        android:shadowDx="-5"
+        android:shadowDy="10"
+        android:shadowRadius="1"
+        android:text="Confirm Settings"
+        android:textColor="#C8C5C5"
+        android:textSize="20sp"
+        app:iconTint="#989696" />
+</LinearLayout>

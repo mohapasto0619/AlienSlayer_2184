@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/menuFragment">
+
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="fr.mastersid.meghasli.alienslayer2184.MenuFragment"
+        android:label="MenuFragment" >
+        <action
+            android:id="@+id/action_menuFragment_to_soloNameInputFragment"
+            app:destination="@id/soloNameInputFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_scoreFragment"
+            app:destination="@id/scoreFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_optionsFragment"
+            app:destination="@id/optionsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/soloFragment"
+        android:name="fr.mastersid.meghasli.alienslayer2184.SoloFragment"
+        android:label="SoloFragment" >
+        <argument
+            android:name="playerName"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/soloNameInputFragment"
+        android:name="fr.mastersid.meghasli.alienslayer2184.SoloNameInputFragment"
+        android:label="SoloNameInputFragment" >
+        <action
+            android:id="@+id/action_soloNameInputFragment_to_soloFragment"
+            app:destination="@id/soloFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/scoreFragment"
+        android:name="fr.mastersid.meghasli.alienslayer2184.ScoreFragment"
+        android:label="ScoreFragment" >
+        <action
+            android:id="@+id/action_scoreFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/optionsFragment"
+        android:name="fr.mastersid.meghasli.alienslayer2184.OptionsFragment"
+        android:label="OptionsFragment" >
+        <action
+            android:id="@+id/action_optionsFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+    </fragment>
+</navigation>

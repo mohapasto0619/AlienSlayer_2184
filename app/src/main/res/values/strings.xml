@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AlienSlayer2184</string>
+    <string name="menu_title">ALIEN  SLAYER 2184</string>
+    <string name="play_solo">Partie Solo</string>
+    <string name="play_multi">Partie Multijoueur</string>
+    <string name="score">Score</string>
+    <string name="settings">Options</string>
+</resources>
