@@ -79,6 +79,7 @@
             android:layout_gravity="center_vertical"
             android:backgroundTint="@color/pink100" />
         <ImageView
+            android:id="@+id/skin_image_view"
             android:layout_width="150dp"
             android:layout_height="180dp"
             android:src="@drawable/playership2" />

@@ -7,14 +7,16 @@ import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 
 public class OptionsFragmentModel extends ViewModel {
-
+    OptionsRepository optionsRepository;
     MutableLiveData<Boolean> gameSoundState =  new MutableLiveData<>(DEFAULT_VALUE_SOUND);
     MutableLiveData<Boolean> gameMusicState =  new MutableLiveData<>(DEFAULT_VALUE_MUSIC);
     MutableLiveData<Integer> skinID = new MutableLiveData<>(DEFAULT_VALUE_SKIN_ID);
-    Context context;
 
-    public OptionsFragmentModel(Context context){
-        this.context = context;
+    public OptionsFragmentModel(OptionsRepository optionsRepository){
+        this.optionsRepository = optionsRepository;
+        gameSoundState.setValue(optionsRepository.loadSoundState());
+        gameMusicState.setValue(optionsRepository.loadMusicState());
+        skinID.setValue(optionsRepository.loadSkinID());
     }
 
     /*public OptionsFragmentModel(SavedStateHandle state){
@@ -41,23 +43,25 @@ public class OptionsFragmentModel extends ViewModel {
     }
 
     public void changeSkinRight(){
-        int next = skinID.getValue() + 1;
-        if(next <= 5) {
-            skinID.setValue(next);
+        if(skinID.getValue() <5){
+            skinID.setValue(skinID.getValue()+1);
         }
     }
 
     public void changeSkinLeft(){
-        int next = skinID.getValue() - 1;
-        if(next <= 1){
-            skinID.setValue(next);
+        if(skinID.getValue() > 1){
+            skinID.setValue(skinID.getValue()-1);
         }
     }
 
+    public void saveOptionsSettings(){
+        optionsRepository.saveSettings(gameMusicState.getValue(),gameSoundState.getValue(),skinID.getValue());
+    }
 
-    static boolean DEFAULT_VALUE_SOUND = true;
-    static boolean DEFAULT_VALUE_MUSIC = true;
-    static int DEFAULT_VALUE_SKIN_ID = 1;
+
+    static boolean DEFAULT_VALUE_SOUND = OptionsBackEnd.DEFAULT_SOUND_STATE_VALUE;
+    static boolean DEFAULT_VALUE_MUSIC = OptionsBackEnd.DEFAULT_MUSIC_STATE_VALUE;
+    static int DEFAULT_VALUE_SKIN_ID = OptionsBackEnd.DEFAULT_SKIN_ID_VALUE;
 
     /*static String SAVED_SOUND_STATE = "SOUND_KEY";
     static String SAVED_MUSIC_STATE = "MUSIC_KEY";

@@ -42,6 +42,7 @@ public class OptionsFragment extends Fragment {
         binding.confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                optionsFragmentModel.saveOptionsSettings();
                 Navigation.findNavController(view).navigate(R.id.action_optionsFragment_to_menuFragment);
             }
         });
@@ -58,6 +59,32 @@ public class OptionsFragment extends Fragment {
             }
         });
 
+        binding.switchSon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (binding.switchSon.isChecked()){
+                    optionsFragmentModel.turnOnGameSound();
+                }
+                else {
+                    optionsFragmentModel.turnOffGameSound();
+                }
+            }
+        });
+
+        binding.rightButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                optionsFragmentModel.changeSkinRight();
+            }
+        });
+
+        binding.leftButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                optionsFragmentModel.changeSkinLeft();
+            }
+        });
+
         optionsFragmentModel.gameMusicState.observe(getViewLifecycleOwner(), value ->{
             if(value){
                 binding.switchMusic.setChecked(true);
@@ -65,6 +92,34 @@ public class OptionsFragment extends Fragment {
             else {
                 binding.switchMusic.setChecked(false);
             }
+        });
+
+        optionsFragmentModel.gameSoundState.observe(getViewLifecycleOwner(), value ->{
+            if(value){
+                binding.switchSon.setChecked(true);
+            }
+            else {
+                binding.switchSon.setChecked(false);
+            }
+        });
+
+        optionsFragmentModel.skinID.observe(getViewLifecycleOwner(), value ->{
+            if (value == 1){
+                binding.skinImageView.setImageResource(R.drawable.playership2);
+            }
+            else if(value == 2){
+                binding.skinImageView.setImageResource(R.drawable.playership1);
+            }
+            else if(value == 3){
+                binding.skinImageView.setImageResource(R.drawable.playership3);
+            }
+            else if(value == 4){
+                binding.skinImageView.setImageResource(R.drawable.playership4);
+            }
+            else if(value == 5){
+                binding.skinImageView.setImageResource(R.drawable.playership6);
+            }
+
         });
 
     }
