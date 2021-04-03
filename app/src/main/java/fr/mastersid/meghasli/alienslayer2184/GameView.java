@@ -28,6 +28,8 @@ public class GameView extends SurfaceView implements Runnable {
     boolean bumpedLeft = false;
     boolean start = true;
     Sound sound;
+    boolean soundState = true;
+    int skinID = 1;
     //
     private Canvas canvas;
     private Paint paint;
@@ -61,8 +63,6 @@ public class GameView extends SurfaceView implements Runnable {
         ourHolder = getHolder(); //!
         paint = new Paint();
         sound = new Sound(context);
-
-
         screenX = x;
         screenY = y;
         //paused =false;
@@ -434,7 +434,10 @@ public class GameView extends SurfaceView implements Runnable {
 
                 if(motionEvent.getY() < screenY - screenY /3){
                     if(missile.shoot(playerShip.getX()+playerShip.getLength()/2,screenY - 500,missile.UP)){
-                        sound.playLazerSound();
+                        if(soundState){
+                            sound.playLazerSound();
+                        }
+
                     }
                 }
 
@@ -449,6 +452,14 @@ public class GameView extends SurfaceView implements Runnable {
 
     public void setPlayerName(String name){
         this.playerName = name;
+    }
+
+    public void setSoundState(boolean state){
+        this.soundState = state;
+    }
+
+    public void setSkinID(int id){
+        playerShip.setPlayerSkin(id);
     }
 
 }

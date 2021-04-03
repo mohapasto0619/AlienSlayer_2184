@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
 
 import fr.mastersid.meghasli.alienslayer2184.databinding.FragmentSoloBinding;
@@ -16,6 +17,9 @@ public class SoloFragment extends Fragment {
     //private FragmentSoloBinding binding;
     Music music;
     GameView gameView;
+    boolean soundState;
+    boolean musicSound;
+    int skinID;
 
     @Override
     public View onCreateView (LayoutInflater inflater,
@@ -47,7 +51,16 @@ public class SoloFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         String name = SoloFragmentArgs.fromBundle(getArguments()).getPlayerName();
+        SoloFragmentModel soloFragmentModel;
+        SoloModelFactory soloModelFactory = new SoloModelFactory(getActivity());
+        soloFragmentModel = new ViewModelProvider(this,soloModelFactory).get(SoloFragmentModel.class);
+
+        soundState = soloFragmentModel.soloSoundState.getValue();
+        musicSound = soloFragmentModel.soloMusicState.getValue();
+        skinID = soloFragmentModel.soloSkinID.getValue();
         gameView.setPlayerName(name);
+        gameView.setSoundState(soundState);
+        gameView.setSkinID(skinID);
 
         /*Display display = getActivity().getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -63,12 +76,16 @@ public class SoloFragment extends Fragment {
     public void onResume() {
         super.onResume();
         gameView.resume();
-        music.playGameMusic();
+        if(musicSound) {
+            music.playGameMusic();
+        }
     }
     @Override
     public void onPause() {
         super.onPause();
         gameView.pause();
-        music.pauseGameMusic();
+        if(musicSound) {
+            music.pauseGameMusic();
+        }
     }
 }
