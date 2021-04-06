@@ -58,6 +58,7 @@
         android:paddingEnd="40dp"
         android:layout_marginTop="20dp">
         <TextView
+            android:id="@+id/name1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="First name"
@@ -69,6 +70,7 @@
             android:shadowColor="@color/black"
             android:fontFamily="@font/lazer84"/>
         <TextView
+            android:id="@+id/score1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
@@ -90,6 +92,7 @@
         android:paddingEnd="40dp"
         android:layout_marginTop="10dp">
         <TextView
+            android:id="@+id/name2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Second name"
@@ -101,6 +104,7 @@
             android:shadowColor="@color/black"
             android:fontFamily="@font/lazer84"/>
         <TextView
+            android:id="@+id/score2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0"
@@ -122,6 +126,7 @@
         android:paddingEnd="40dp"
         android:layout_marginTop="10dp">
         <TextView
+            android:id="@+id/name3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Third name"
@@ -133,6 +138,7 @@
             android:shadowColor="@color/black"
             android:fontFamily="@font/lazer84"/>
         <TextView
+            android:id="@+id/score3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="120dp"
@@ -155,6 +161,7 @@
         android:paddingEnd="40dp"
         android:layout_marginTop="10dp">
         <TextView
+            android:id="@+id/name4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Fourth name"
@@ -166,6 +173,7 @@
             android:shadowColor="@color/black"
             android:fontFamily="@font/lazer84"/>
         <TextView
+            android:id="@+id/score4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="120dp"
@@ -188,6 +196,7 @@
         android:paddingEnd="40dp"
         android:layout_marginTop="10dp">
         <TextView
+            android:id="@+id/name5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Fifth name"
@@ -199,6 +208,7 @@
             android:shadowColor="@color/black"
             android:fontFamily="@font/lazer84"/>
         <TextView
+            android:id="@+id/score5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="120dp"
@@ -221,6 +231,7 @@
         android:paddingEnd="40dp"
         android:layout_marginTop="10dp">
         <TextView
+            android:id="@+id/name6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sixth name"
@@ -232,6 +243,7 @@
             android:shadowColor="@color/black"
             android:fontFamily="@font/lazer84"/>
         <TextView
+            android:id="@+id/score6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="120dp"
@@ -254,6 +266,7 @@
         android:paddingEnd="40dp"
         android:layout_marginTop="10dp">
         <TextView
+            android:id="@+id/name7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="SEVENTH name"
@@ -265,6 +278,7 @@
             android:shadowColor="@color/black"
             android:fontFamily="@font/lazer84"/>
         <TextView
+            android:id="@+id/score7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="120dp"
@@ -287,6 +301,7 @@
         android:paddingEnd="40dp"
         android:layout_marginTop="10dp">
         <TextView
+            android:id="@+id/name8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Eighth name"
@@ -298,6 +313,7 @@
             android:shadowColor="@color/black"
             android:fontFamily="@font/lazer84"/>
         <TextView
+            android:id="@+id/score8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="120dp"
@@ -320,6 +336,7 @@
         android:paddingEnd="40dp"
         android:layout_marginTop="10dp">
         <TextView
+            android:id="@+id/name9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ninth name"
@@ -331,6 +348,7 @@
             android:shadowColor="@color/black"
             android:fontFamily="@font/lazer84"/>
         <TextView
+            android:id="@+id/score9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="120dp"
@@ -353,6 +371,7 @@
         android:paddingEnd="40dp"
         android:layout_marginTop="10dp">
         <TextView
+            android:id="@+id/name10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tenth name"
@@ -364,6 +383,7 @@
             android:shadowColor="@color/black"
             android:fontFamily="@font/lazer84"/>
         <TextView
+            android:id="@+id/score10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="120dp"
@@ -386,6 +406,7 @@
         android:paddingEnd="40dp"
         android:layout_marginTop="10dp">
         <TextView
+            android:id="@+id/name11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="11 th name"
@@ -397,6 +418,7 @@
             android:shadowColor="@color/black"
             android:fontFamily="@font/lazer84"/>
         <TextView
+            android:id="@+id/score11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="120dp"

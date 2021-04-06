@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import fr.mastersid.meghasli.alienslayer2184.databinding.FragmentMenuBinding;
@@ -35,11 +36,20 @@ public class ScoreFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ScoreFragmentModel scoreFragmentModel;
+        ScoreModelFactory scoreModelFactory = new ScoreModelFactory(getActivity());
+        scoreFragmentModel = new ViewModelProvider(this, scoreModelFactory).get(ScoreFragmentModel.class);
 
         binding.buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(view).navigate(R.id.action_scoreFragment_to_menuFragment);
+            }
+        });
+
+        scoreFragmentModel.names[0].observe(getViewLifecycleOwner(), value ->{
+            if(value != binding.name1.getText()){
+                binding.name1.setText(value);
             }
         });
 
