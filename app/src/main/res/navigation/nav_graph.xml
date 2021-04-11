@@ -25,6 +25,10 @@
         <argument
             android:name="playerName"
             app:argType="string" />
+        <action
+            android:id="@+id/action_soloFragment_to_soloGameOverFragment"
+            app:destination="@id/soloGameOverFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/soloNameInputFragment"
@@ -50,4 +54,16 @@
             android:id="@+id/action_optionsFragment_to_menuFragment"
             app:destination="@id/menuFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/soloGameOverFragment"
+        android:name="fr.mastersid.meghasli.alienslayer2184.SoloGameOverFragment"
+        android:label="SoloGameOverFragment" >
+        <argument
+            android:name="playerName"
+            app:argType="string" />
+        <argument
+            android:name="playerScore"
+            app:argType="integer" />
+    </fragment>
+
 </navigation>

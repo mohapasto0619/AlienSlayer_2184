@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import fr.mastersid.meghasli.alienslayer2184.databinding.FragmentSoloBinding;
 
@@ -20,6 +21,7 @@ public class SoloFragment extends Fragment {
     boolean soundState;
     boolean musicSound;
     int skinID;
+    private int playerScore = 0;
 
     @Override
     public View onCreateView (LayoutInflater inflater,
@@ -49,6 +51,7 @@ public class SoloFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
         String name = SoloFragmentArgs.fromBundle(getArguments()).getPlayerName();
         SoloFragmentModel soloFragmentModel;
@@ -58,9 +61,19 @@ public class SoloFragment extends Fragment {
         soundState = soloFragmentModel.soloSoundState.getValue();
         musicSound = soloFragmentModel.soloMusicState.getValue();
         skinID = soloFragmentModel.soloSkinID.getValue();
+        gameView.setGameOverState(soloFragmentModel.isItGameOver);
         gameView.setPlayerName(name);
         gameView.setSoundState(soundState);
         gameView.setSkinID(skinID);
+
+
+        soloFragmentModel.isItGameOver.observe(getViewLifecycleOwner(), value ->{
+            if(value){
+                playerScore = gameView.getScore();
+                NavDirections action = SoloFragmentDirections.actionSoloFragmentToSoloGameOverFragment(name,playerScore);
+                Navigation.findNavController(view).navigate(action);
+            }
+        });
 
         /*Display display = getActivity().getWindowManager().getDefaultDisplay();
         Point size = new Point();

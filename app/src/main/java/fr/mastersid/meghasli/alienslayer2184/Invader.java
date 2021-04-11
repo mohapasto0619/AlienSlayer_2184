@@ -41,7 +41,7 @@ public class Invader {
         int padding = screenX/8;
 
         x = column *length + padding;
-        y = (row *length - screenY) + (padding/4);
+        y = (row *length /*- screenY/2*/) + (padding/4);
 
         bitmap1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.invader3);
         bitmap2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.invader3);

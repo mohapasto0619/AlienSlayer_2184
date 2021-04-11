@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@drawable/gameover_background">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" Game Over "
+        android:textSize="40sp"
+        android:layout_gravity="center"
+        android:layout_marginTop="80dp"
+        android:fontFamily="@font/lazer84"
+        android:textColor="@color/pink100"
+        android:shadowColor="@color/black"
+        android:shadowRadius='1'
+        android:shadowDy="2"
+        android:shadowDx="-5"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_marginTop="140dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Name : "
+            android:textSize="25sp"
+            android:fontFamily="@font/lazer84"
+            android:textColor="@color/pink100"
+            android:shadowColor="@color/black"
+            android:shadowRadius='1'
+            android:shadowDy="2"
+            android:shadowDx="-5"/>
+        <TextView
+            android:id="@+id/name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" DEFAULT "
+            android:textSize="25sp"
+            android:fontFamily="@font/lazer84"
+            android:textColor="@color/pink100"
+            android:shadowColor="@color/black"
+            android:shadowRadius='1'
+            android:shadowDy="2"
+            android:shadowDx="-5"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Score : "
+            android:textSize="25sp"
+            android:paddingTop="30dp"
+            android:fontFamily="@font/lazer84"
+            android:textColor="@color/pink100"
+            android:shadowColor="@color/black"
+            android:shadowRadius='1'
+            android:shadowDy="2"
+            android:shadowDx="-5"/>
+        <TextView
+            android:id="@+id/score_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0000"
+            android:textSize="25sp"
+            android:fontFamily="@font/lazer84"
+            android:textColor="@color/pink100"
+            android:shadowColor="@color/black"
+            android:shadowRadius='1'
+            android:shadowDy="2"
+            android:shadowDx="-5"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/back_main_menu_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BACK TO MAIN MENU"
+        android:layout_gravity="center"
+        android:layout_marginTop="160dp"
+        android:fontFamily="@font/lazer84"
+        android:backgroundTint="@color/pink100"/>
+
+</LinearLayout>

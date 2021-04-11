@@ -93,6 +93,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="soloGameOverFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="280" />
+                            <option name="y" value="-269" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="soloNameInputFragment">
                     <value>
                       <LayoutPositions>

@@ -8,6 +8,7 @@ public class SoloFragmentModel extends ViewModel {
     MutableLiveData<Boolean> soloSoundState = new MutableLiveData<>(DEFAULT_VALUE_SOUND);
     MutableLiveData<Boolean> soloMusicState = new MutableLiveData<>(DEFAULT_VALUE_MUSIC);
     MutableLiveData<Integer> soloSkinID = new MutableLiveData<>(DEFAULT_VALUE_SKIN_ID);
+    MutableLiveData<Boolean> isItGameOver = new MutableLiveData<>(false);
 
     public SoloFragmentModel(OptionsRepository optionsRepository){
         this.optionsRepository = optionsRepository;

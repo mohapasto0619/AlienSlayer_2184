@@ -11,9 +11,13 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 
 import androidx.annotation.RequiresApi;
+import androidx.lifecycle.MediatorLiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 public class GameView extends SurfaceView implements Runnable {
     Context context;
@@ -55,6 +59,7 @@ public class GameView extends SurfaceView implements Runnable {
     private String playerName = "No name";
     int score = 0;
     private int lives = 3;
+    volatile MutableLiveData<Boolean> isItGameOver;
 
 
     public GameView(Context context, int x, int y) {
@@ -81,8 +86,8 @@ public class GameView extends SurfaceView implements Runnable {
         }
 
         numInvaders = 0;
-        for(int column = 0; column < 3; column ++ ){
-            for(int row = 0; row < 5; row ++ ){
+        for(int column = 0; column < 1; column ++ ){
+            for(int row = 0; row < 1; row ++ ){
                 invaders[numInvaders] = new Invader(context, row, column, screenX, screenY);
                 numInvaders ++;
             }
@@ -98,6 +103,20 @@ public class GameView extends SurfaceView implements Runnable {
             }
         }
 
+    }
+
+    public void initNextLevel(){
+        for (int i=0; i<invadersMissile.length; i++){
+            invadersMissile[i] = new Missile(screenY);
+        }
+
+        numInvaders = 0;
+        for(int column = 0; column < 3; column ++ ){
+            for(int row = 0; row < 5; row ++ ){
+                invaders[numInvaders] = new Invader(context, row, column, screenX, screenY);
+                numInvaders ++;
+            }
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -121,6 +140,7 @@ public class GameView extends SurfaceView implements Runnable {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void update() {
 
 
@@ -291,10 +311,23 @@ public class GameView extends SurfaceView implements Runnable {
 
                         // Has the player win
                         if(score == numInvaders * 10){
-                            paused = true;
-                            score = 0;
-                            lives = 3;
-                            initLevel();
+                            //paused = true;
+
+                            //lives = 3;
+                            paused =! paused ;
+                            if(!paused){
+                                score = 0;
+                            }
+                            else{
+                                initNextLevel();
+                            }
+
+
+
+
+
+
+                            //initLevel();
                         }
                     }
                 }
@@ -338,9 +371,15 @@ public class GameView extends SurfaceView implements Runnable {
                     // Is it game over
                     if(lives == 0){
                         paused = true;
-                        lives = 3;
-                        score = 0;
-                        initLevel();
+                        isItGameOver.postValue(true);
+                        //lives = 3;
+                        //score = 0;
+                        //initLevel();
+
+                       // NavDirections action = NavGraphDirections.actionSoloFragmentToSoloGameOverFragment();
+                       // Navigation.findNavController(this).navigate(action);
+
+
                     }
                 }
             }
@@ -460,6 +499,13 @@ public class GameView extends SurfaceView implements Runnable {
 
     public void setSkinID(int id){
         playerShip.setPlayerSkin(id);
+    }
+
+    public void setGameOverState(MutableLiveData<Boolean> isItGameOver){
+        this.isItGameOver = isItGameOver;
+    }
+    public int getScore(){
+        return this.score;
     }
 
 }
