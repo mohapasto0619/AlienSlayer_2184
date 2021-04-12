@@ -1,8 +1,21 @@
 <resources>
     <string name="app_name">AlienSlayer2184</string>
     <string name="menu_title">ALIEN  SLAYER 2184</string>
-    <string name="play_solo">Partie Solo</string>
-    <string name="play_multi">Partie Multijoueur</string>
-    <string name="score">Score</string>
-    <string name="settings">Options</string>
+    <string name="play_solo"> Partie Solo</string>
+    <string name="play_multi"> Partie Multijoueur</string>
+    <string name="score"> Score</string>
+    <string name="settings"> Options</string>
+    <string name="board_names"> " %s "  </string>
+    <string name="board_scores"> " %d " </string>
+    <string name="game_story"> In the year 2180, when humanity is at its peak in terms of technology and prosperity,
+        a group of scientists develop a promising technology that would allow contact with all forms of intelligent life
+        no matter where they are in the universe.
+        A few months later they receive signals from an alien galaxy that seems to be coming from an unknown galaxy.
+        This is a huge breakthrough for humanity as they discover that they are not the only life form.
+        In 2183 objects that appear to be spaceships head for Earth and their arrival is scheduled for 2184.
+        Humanity prepares to welcome its new guests with peace and diplomacy,
+        unaware that the latter have hostile intentions and covet our planet. When they arrive,
+        the aliens decimate everything in their path,
+        but fortunately some brave soldiers are ready to do anything to save humanity.
+        You are one of these brave soldiers, the fate of humanity is in your hands.)</string>
 </resources>

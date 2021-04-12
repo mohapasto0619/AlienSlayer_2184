@@ -3,6 +3,7 @@ package fr.mastersid.meghasli.alienslayer2184;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,7 @@ public class SoloNameInputFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-
+        binding.storyText.setMovementMethod(new ScrollingMovementMethod());
         binding.startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

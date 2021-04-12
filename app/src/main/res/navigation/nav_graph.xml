@@ -64,6 +64,9 @@
         <argument
             android:name="playerScore"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_soloGameOverFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
     </fragment>
 
 </navigation>

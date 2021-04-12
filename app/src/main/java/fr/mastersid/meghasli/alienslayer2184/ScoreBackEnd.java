@@ -5,6 +5,6 @@ public interface ScoreBackEnd {
     String[] loadNames();
     Integer[] loadScores();
 
-    static String DEFAULT_NAME_VALUE = "--------";
+    static String DEFAULT_NAME_VALUE = "-----------------";
     static int DEFAULT_SCORE_VALUE = 0;
 }

@@ -10,14 +10,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Options : "
+        android:text=" Options : "
         android:shadowColor="@color/black"
         android:shadowRadius='1'
         android:shadowDy="2"
         android:shadowDx="-5"
         android:textColor="@color/pink100"
         android:textSize="30sp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/lazer84"/>
 
     <Switch
@@ -32,7 +32,7 @@
         android:shadowDx="-5"
         android:shadowDy="2"
 
-        android:textSize="25sp"
+        android:textSize="24sp"
         android:fontFamily="@font/lazer84"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:text="ON / OFF GAME MUSIC"
         android:textColor="@color/pink200"
-        android:textSize="25sp"
+        android:textSize="24sp"
         android:shadowColor="@color/black"
         android:shadowRadius='1'
         android:shadowDy="2"
@@ -97,7 +97,7 @@
         android:id="@+id/confirm_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="70dp"
         android:backgroundTint="@color/pink100"
         android:fontFamily="@font/lazer84"
         android:shadowColor="@color/black"

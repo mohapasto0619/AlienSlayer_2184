@@ -49,7 +49,133 @@ public class ScoreFragment extends Fragment {
 
         scoreFragmentModel.names[0].observe(getViewLifecycleOwner(), value ->{
             if(value != binding.name1.getText()){
-                binding.name1.setText(value);
+                binding.name1.setText(getString(R.string.board_names,value));
+            }
+        });
+
+        scoreFragmentModel.names[1].observe(getViewLifecycleOwner(), value ->{
+            if(value != binding.name2.getText()){
+                binding.name2.setText(getString(R.string.board_names,value));
+            }
+        });
+
+        scoreFragmentModel.names[2].observe(getViewLifecycleOwner(), value ->{
+            if(value != binding.name3.getText()){
+                binding.name3.setText(getString(R.string.board_names,value));
+            }
+        });
+
+        scoreFragmentModel.names[3].observe(getViewLifecycleOwner(), value ->{
+            if(value != binding.name4.getText()){
+                binding.name4.setText(getString(R.string.board_names,value));
+            }
+        });
+
+        scoreFragmentModel.names[4].observe(getViewLifecycleOwner(), value ->{
+            if(value != binding.name5.getText()){
+                binding.name5.setText(getString(R.string.board_names,value));
+            }
+        });
+
+        scoreFragmentModel.names[5].observe(getViewLifecycleOwner(), value ->{
+            if(value != binding.name6.getText()){
+                binding.name6.setText(getString(R.string.board_names,value));
+            }
+        });
+
+        scoreFragmentModel.names[6].observe(getViewLifecycleOwner(), value ->{
+            if(value != binding.name7.getText()){
+                binding.name7.setText(getString(R.string.board_names,value));
+            }
+        });
+
+        scoreFragmentModel.names[7].observe(getViewLifecycleOwner(), value ->{
+            if(value != binding.name8.getText()){
+                binding.name8.setText(getString(R.string.board_names,value));
+            }
+        });
+
+        scoreFragmentModel.names[8].observe(getViewLifecycleOwner(), value ->{
+            if(value != binding.name9.getText()){
+                binding.name9.setText(getString(R.string.board_names,value));
+            }
+        });
+
+        scoreFragmentModel.names[9].observe(getViewLifecycleOwner(), value ->{
+            if(value != binding.name10.getText()){
+                binding.name10.setText(getString(R.string.board_names,value));
+            }
+        });
+
+        scoreFragmentModel.names[10].observe(getViewLifecycleOwner(), value ->{
+            if(value != binding.name11.getText()){
+                binding.name11.setText(getString(R.string.board_names,value));
+            }
+        });
+
+        scoreFragmentModel.scores[0].observe(getViewLifecycleOwner(), value ->{
+            if(value != Integer.parseInt(binding.score1.getText().toString())){
+                binding.score1.setText(getString(R.string.board_scores,value));
+            }
+        });
+
+        scoreFragmentModel.scores[1].observe(getViewLifecycleOwner(), value ->{
+            if(value != Integer.parseInt(binding.score2.getText().toString())){
+                binding.score2.setText(getString(R.string.board_scores,value));
+            }
+        });
+
+        scoreFragmentModel.scores[2].observe(getViewLifecycleOwner(), value ->{
+            if(value != Integer.parseInt(binding.score3.getText().toString())){
+                binding.score3.setText(getString(R.string.board_scores,value));
+            }
+        });
+
+        scoreFragmentModel.scores[3].observe(getViewLifecycleOwner(), value ->{
+            if(value != Integer.parseInt(binding.score4.getText().toString())){
+                binding.score4.setText(getString(R.string.board_scores,value));
+            }
+        });
+
+        scoreFragmentModel.scores[4].observe(getViewLifecycleOwner(), value ->{
+            if(value != Integer.parseInt(binding.score5.getText().toString())){
+                binding.score5.setText(getString(R.string.board_scores,value));
+            }
+        });
+
+        scoreFragmentModel.scores[5].observe(getViewLifecycleOwner(), value ->{
+            if(value != Integer.parseInt(binding.score6.getText().toString())){
+                binding.score6.setText(getString(R.string.board_scores,value));
+            }
+        });
+
+        scoreFragmentModel.scores[6].observe(getViewLifecycleOwner(), value ->{
+            if(value != Integer.parseInt(binding.score7.getText().toString())){
+                binding.score7.setText(getString(R.string.board_scores,value));
+            }
+        });
+
+        scoreFragmentModel.scores[7].observe(getViewLifecycleOwner(), value ->{
+            if(value != Integer.parseInt(binding.score8.getText().toString())){
+                binding.score8.setText(getString(R.string.board_scores,value));
+            }
+        });
+
+        scoreFragmentModel.scores[8].observe(getViewLifecycleOwner(), value ->{
+            if(value != Integer.parseInt(binding.score9.getText().toString())){
+                binding.score9.setText(getString(R.string.board_scores,value));
+            }
+        });
+
+        scoreFragmentModel.scores[9].observe(getViewLifecycleOwner(), value ->{
+            if(value != Integer.parseInt(binding.score10.getText().toString())){
+                binding.score10.setText(getString(R.string.board_scores,value));
+            }
+        });
+
+        scoreFragmentModel.scores[10].observe(getViewLifecycleOwner(), value ->{
+            if(value != Integer.parseInt(binding.score11.getText().toString())){
+                binding.score11.setText(getString(R.string.board_scores,value));
             }
         });
 
