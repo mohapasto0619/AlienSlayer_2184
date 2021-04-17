@@ -1,6 +1,7 @@
 package fr.mastersid.meghasli.alienslayer2184;
 
 
+import android.bluetooth.BluetoothAdapter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
@@ -14,6 +15,7 @@ import fr.mastersid.meghasli.alienslayer2184.databinding.FragmentSoloNameInputBi
 
 public class SoloNameInputFragment extends Fragment {
     private FragmentSoloNameInputBinding binding;
+
 
     @Override
     public View onCreateView (LayoutInflater inflater,

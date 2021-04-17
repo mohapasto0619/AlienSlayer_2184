@@ -57,6 +57,13 @@ public class MenuFragment extends Fragment {
             }
         });
 
+        binding.buttonMulti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigate(R.id.action_menuFragment_to_connectionFragment);
+            }
+        });
+
         /*MutableLiveData data = new MutableLiveData();
         data.setValue("yes");
         data.observe(getViewLifecycleOwner(), value ->{

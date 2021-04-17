@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_menuFragment_to_optionsFragment"
             app:destination="@id/optionsFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_connectionFragment"
+            app:destination="@id/connectionFragment" />
     </fragment>
     <fragment
         android:id="@+id/soloFragment"
@@ -68,5 +71,9 @@
             android:id="@+id/action_soloGameOverFragment_to_menuFragment"
             app:destination="@id/menuFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/connectionFragment"
+        android:name="fr.mastersid.meghasli.alienslayer2184.ConnectionFragment"
+        android:label="ConnectionFragment" />
 
 </navigation>

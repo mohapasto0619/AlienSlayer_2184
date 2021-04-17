@@ -6,6 +6,7 @@
     android:gravity="center_horizontal"
     android:background="@drawable/name_background">
 
+
     <TextView
         android:id="@+id/main_text"
         android:layout_width="wrap_content"
@@ -30,19 +31,20 @@
         android:hint="Please enter your name"
         android:textColorHint="#CFC9C9"
         android:textSize="20sp" />
+
     <TextView
         android:id="@+id/story_text"
         android:layout_width="wrap_content"
         android:layout_height="330dp"
-        android:scrollbars="vertical"
         android:layout_marginTop="20dp"
-        android:textSize="20sp"
-        android:text="@string/game_story"
-        android:textColor="@color/white"
+        android:scrollbars="vertical"
         android:shadowColor="@color/black"
         android:shadowDx="-5"
         android:shadowDy="5"
-        android:shadowRadius="1"/>
+        android:shadowRadius="1"
+        android:text="@string/game_story"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/start_button"
