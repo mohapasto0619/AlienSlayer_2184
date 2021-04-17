@@ -8,8 +8,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.wifi.WifiManager;
+import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
+import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
@@ -31,6 +34,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -41,15 +45,9 @@ import static android.os.Looper.getMainLooper;
 
 public class ConnectionFragment extends Fragment {
     private FragmentConnectionBinding binding;
-    WifiManager mWifi;
-    WifiP2pManager manager;
-    WifiP2pManager.Channel channel;
+    MyWifiP2pManager myWifiP2pManager;
     BroadcastReceiver receiver;
-    IntentFilter intentFilter;
 
-    List<WifiP2pDevice> peers = new ArrayList<WifiP2pDevice>();
-    String[] deviceNameArray;
-    WifiP2pDevice[] deviceArray;
 
 
     @Override
@@ -71,7 +69,9 @@ public class ConnectionFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        init();
+        myWifiP2pManager = new MyWifiP2pManager(getActivity());
+        receiver = new WifiDirectBroadcastReceiver(myWifiP2pManager.getManager(), myWifiP2pManager.getChannel(),
+                this, getActivity());
         enableWifi();
 
         binding.searchButton.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +81,7 @@ public class ConnectionFragment extends Fragment {
                     binding.connectionStatus.setText("Permission denied");
                     return;
                 }
-                manager.discoverPeers(channel, new WifiP2pManager.ActionListener() {
+                myWifiP2pManager.getManager().discoverPeers(myWifiP2pManager.getChannel(), new WifiP2pManager.ActionListener() {
                     @Override
                     public void onSuccess() {
                         binding.connectionStatus.setText("Discovery started");
@@ -94,24 +94,36 @@ public class ConnectionFragment extends Fragment {
                 });
             }
         });
-    }
 
-    private void init() {
-        mWifi = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        manager = (WifiP2pManager) getActivity().getSystemService(Context.WIFI_P2P_SERVICE);
-        channel = manager.initialize(getActivity(), getMainLooper(),null);
-        receiver = new WifiDirectBroadcastReceiver(manager,channel,this,getActivity());
-        intentFilter = new IntentFilter();
-        intentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
-        intentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
-        intentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
-    }
+        binding.devicesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                final WifiP2pDevice device = myWifiP2pManager.getDeviceArray()[i];
+                WifiP2pConfig config = new WifiP2pConfig();
+                config.deviceAddress = device.deviceAddress;
+                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    binding.connectionStatus.setText("Permission denied");
+                    return;
+                }
+                myWifiP2pManager.getManager().connect(myWifiP2pManager.getChannel(), config, new WifiP2pManager.ActionListener() {
+                    @Override
+                    public void onSuccess() {
+                        binding.connectionStatus.setText("Connected");
+                    }
 
+                    @Override
+                    public void onFailure(int reason) {
+                        binding.connectionStatus.setText("Connetion failed");
+                    }
+                });
+            }
+        });
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void enableWifi() {
         Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
-        if (!mWifi.isWifiEnabled()){
+        if (!myWifiP2pManager.getmWifi().isWifiEnabled()){
             wifiSettingsResultLauncher.launch(intent);
             Toast.makeText(getActivity(),"Please Turn ON Wifi",Toast.LENGTH_SHORT).show();
         }
@@ -132,22 +144,22 @@ public class ConnectionFragment extends Fragment {
     WifiP2pManager.PeerListListener peerListListener = new WifiP2pManager.PeerListListener(){
         @Override
         public void onPeersAvailable(WifiP2pDeviceList wifiP2pDeviceList) {
-            if(!wifiP2pDeviceList.equals(peers)){
-                peers.clear();
-                peers.addAll(wifiP2pDeviceList.getDeviceList());
-                deviceNameArray = new String[wifiP2pDeviceList.getDeviceList().size()];
-                deviceArray = new WifiP2pDevice[wifiP2pDeviceList.getDeviceList().size()];
+            if(!wifiP2pDeviceList.equals(myWifiP2pManager.getPeers())){
+                myWifiP2pManager.getPeers().clear();
+                myWifiP2pManager.getPeers().addAll(wifiP2pDeviceList.getDeviceList());
+                myWifiP2pManager.deviceNameArray = new String[wifiP2pDeviceList.getDeviceList().size()];
+                myWifiP2pManager.deviceArray = new WifiP2pDevice[wifiP2pDeviceList.getDeviceList().size()];
 
                 int i = 0;
                 for(WifiP2pDevice device : wifiP2pDeviceList.getDeviceList()){
-                    deviceNameArray[i] = device.deviceName;
-                    deviceArray[i] = device;
+                    myWifiP2pManager.getDeviceNameArray()[i] = device.deviceName;
+                    myWifiP2pManager.getDeviceArray()[i] = device;
                 }
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity().getApplicationContext(),
-                        android.R.layout.simple_list_item_1,deviceNameArray);
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),
+                        android.R.layout.simple_list_item_1, myWifiP2pManager.getDeviceNameArray());
                 binding.devicesList.setAdapter(arrayAdapter);
 
-                if(peers.size() == 0){
+                if(myWifiP2pManager.getPeers().size() == 0){
                     binding.connectionStatus.setText("No Device");
                     return;
                 }
@@ -155,10 +167,27 @@ public class ConnectionFragment extends Fragment {
         }
     };
 
+    WifiP2pManager.ConnectionInfoListener connectionInfoListener = new WifiP2pManager.ConnectionInfoListener(){
+        @Override
+        public void onConnectionInfoAvailable(WifiP2pInfo wifiP2pInfo) {
+            final InetAddress groupOwnerAddress = wifiP2pInfo.groupOwnerAddress;
+            if(wifiP2pInfo.groupFormed && wifiP2pInfo.isGroupOwner){
+                binding.connectionStatus.setText("Host");
+            }
+            else if(wifiP2pInfo.groupFormed){
+                binding.connectionStatus.setText("Client");
+            }
+        }
+    };
+
+    public FragmentConnectionBinding getBinding() {
+        return binding;
+    }
+
     @Override
     public void onResume() {
         super.onResume();
-        requireActivity().registerReceiver(receiver,intentFilter);
+        requireActivity().registerReceiver(receiver,myWifiP2pManager.getIntentFilter());
     }
 
     @Override
