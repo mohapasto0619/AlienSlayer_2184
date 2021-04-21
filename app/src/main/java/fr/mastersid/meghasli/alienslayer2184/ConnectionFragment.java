@@ -15,6 +15,7 @@ import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
@@ -32,12 +33,22 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import fr.mastersid.meghasli.alienslayer2184.databinding.FragmentConnectionBinding;
 
@@ -47,6 +58,12 @@ public class ConnectionFragment extends Fragment {
     private FragmentConnectionBinding binding;
     MyWifiP2pManager myWifiP2pManager;
     BroadcastReceiver receiver;
+    Socket socket;
+    ServerClass serverClass;
+    ClientClass clientClass;
+    boolean isHost;
+
+    volatile MutableLiveData<String> reader;
 
 
 
@@ -72,6 +89,7 @@ public class ConnectionFragment extends Fragment {
         myWifiP2pManager = new MyWifiP2pManager(getActivity());
         receiver = new WifiDirectBroadcastReceiver(myWifiP2pManager.getManager(), myWifiP2pManager.getChannel(),
                 this, getActivity());
+        reader = new MutableLiveData<>();
         enableWifi();
 
         binding.searchButton.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +126,7 @@ public class ConnectionFragment extends Fragment {
                 myWifiP2pManager.getManager().connect(myWifiP2pManager.getChannel(), config, new WifiP2pManager.ActionListener() {
                     @Override
                     public void onSuccess() {
-                        binding.connectionStatus.setText("Connected");
+                        binding.connectionStatus.setText("Connected : " + device.deviceAddress);
                     }
 
                     @Override
@@ -118,6 +136,26 @@ public class ConnectionFragment extends Fragment {
                 });
             }
         });
+
+        binding.buttonSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ExecutorService executor = Executors.newSingleThreadExecutor();
+                String msg = binding.editTextMsg.getText().toString();
+                executor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(msg != null && isHost){
+                            serverClass.write(msg.getBytes());
+                        }
+                        else if(msg != null && !isHost){
+                            clientClass.write(msg.getBytes());
+                        }
+                    }
+                });
+            }
+        });
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -173,9 +211,16 @@ public class ConnectionFragment extends Fragment {
             final InetAddress groupOwnerAddress = wifiP2pInfo.groupOwnerAddress;
             if(wifiP2pInfo.groupFormed && wifiP2pInfo.isGroupOwner){
                 binding.connectionStatus.setText("Host");
+                isHost = true;
+                serverClass = new ServerClass();
+                serverClass.start();
+
             }
             else if(wifiP2pInfo.groupFormed){
                 binding.connectionStatus.setText("Client");
+                isHost = false;
+                clientClass = new ClientClass(groupOwnerAddress);
+                clientClass.start();
             }
         }
     };
@@ -195,4 +240,117 @@ public class ConnectionFragment extends Fragment {
         super.onPause();
         requireActivity().unregisterReceiver(receiver);
     }
+
+    public class ServerClass extends Thread{
+        ServerSocket serverSocket;
+        private InputStream inputStream;
+        private OutputStream outputStream;
+
+        public void write(byte[] bytes){
+            try {
+                outputStream.write(bytes);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void run() {
+            //super.run();
+            try {
+                serverSocket = new ServerSocket(8888);
+                socket = serverSocket.accept();
+                inputStream = socket.getInputStream();
+                outputStream = socket.getOutputStream();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            Handler handler = new Handler(Looper.getMainLooper());
+
+            executor.execute(new Runnable(){
+                @Override
+                public void run() {
+                    byte[] buffer = new byte[1024];
+                    int bytes;
+
+                    while(socket != null){
+                        try {
+                            bytes = inputStream.read(buffer);
+                            if(bytes > 0){
+                                int finalBytes = bytes;
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        String tempMsg = new String(buffer,0,finalBytes);
+                                        binding.messageView.setText(tempMsg);
+                                    }
+                                });
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    public class ClientClass extends Thread {
+        String hostAdd;
+        private InputStream inputStream;
+        private OutputStream outputStream;
+
+        public ClientClass(InetAddress hostAddress){
+            hostAdd = hostAddress.getHostAddress();
+            socket = new Socket();
+        }
+
+        public void write(byte[] bytes){
+            try {
+                outputStream.write(bytes);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void run() {
+            try {
+                socket.connect(new InetSocketAddress(hostAdd, 8888),500);
+                outputStream = socket.getOutputStream();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            Handler handler = new Handler(Looper.getMainLooper());
+
+            executor.execute(new Runnable(){
+                @Override
+                public void run() {
+                    byte[] buffer = new byte[1024];
+                    int bytes;
+
+                    while(socket != null){
+                        try {
+                            bytes = inputStream.read(buffer);
+                            if(bytes > 0){
+                                int finalBytes = bytes;
+                                handler.post(new Runnable(){
+                                    @Override
+                                    public void run() {
+                                        String tempMsg = new String(buffer,0,finalBytes);
+                                        binding.messageView.setText(tempMsg);
+                                    }
+                                });
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+        }
+    }
+
 }

@@ -21,6 +21,8 @@ public class MyWifiP2pManager {
     WifiP2pManager.Channel channel;
     IntentFilter intentFilter;
     Context context;
+    //Client client;
+    //Server server;
 
     List<WifiP2pDevice> peers = new ArrayList<WifiP2pDevice>();
     String[] deviceNameArray;

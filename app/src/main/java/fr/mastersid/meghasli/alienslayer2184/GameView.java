@@ -60,6 +60,7 @@ public class GameView extends SurfaceView implements Runnable {
     int score = 0;
     private int lives = 3;
     volatile MutableLiveData<Boolean> isItGameOver;
+    int numberTotInvaders=0;
 
 
     public GameView(Context context, int x, int y) {
@@ -92,6 +93,7 @@ public class GameView extends SurfaceView implements Runnable {
                 numInvaders ++;
             }
         }
+        numberTotInvaders = numberTotInvaders + numInvaders;
 
         numDefense = 0;
         for(int shelterNumber = 0; shelterNumber < 3; shelterNumber++){
@@ -117,6 +119,7 @@ public class GameView extends SurfaceView implements Runnable {
                 numInvaders ++;
             }
         }
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -128,8 +131,9 @@ public class GameView extends SurfaceView implements Runnable {
             if (paused == false) {
                 update();
             }
-            draw();
 
+            draw();
+            checkInvaders();
             timeThisFrame = System.currentTimeMillis() - startFrameTime;
             if (timeThisFrame >= 1) {
                 fps = 1000 / timeThisFrame;
@@ -144,7 +148,7 @@ public class GameView extends SurfaceView implements Runnable {
     private void update() {
 
 
-        boolean lost = false;
+        //boolean lost = false;
         background.update(fps);
         playerShip.update(fps);
 
@@ -282,9 +286,9 @@ public class GameView extends SurfaceView implements Runnable {
             bumped = false;
         }*/
 
-        if (lost == true) {
+        /*if (lost == true) {
             initLevel();
-        }
+        }*/
 
         if(missile.getStatus() == true){
             missile.update(fps);
@@ -310,25 +314,17 @@ public class GameView extends SurfaceView implements Runnable {
                         score = score + 10;
 
                         // Has the player win
-                        if(score == numInvaders * 10){
-                            //paused = true;
-
-                            //lives = 3;
-                            paused =! paused ;
-                            if(!paused){
-                                score = 0;
-                            }
-                            else{
+                        /*if(score == numInvaders * 10){
+                            if(paused == false){
+                                paused = true;
                                 initNextLevel();
                             }
-
-
-
-
-
-
+                            else if(paused == true){
+                                score = 0;
+                                paused = false;
+                            }
                             //initLevel();
-                        }
+                        }*/
                     }
                 }
             }
@@ -420,7 +416,7 @@ public class GameView extends SurfaceView implements Runnable {
                     canvas.drawRect(invadersMissile[i].getRect(),paint);
                 }
             }
-            
+
             paint.setColor(Color.argb(255, 246, 1, 157));
             canvas.drawText("Score :   "+ score+"     Vie :    "+ lives+ "                  Nom Joueur :   "
                     + playerName,10,130,paint);
@@ -438,6 +434,20 @@ public class GameView extends SurfaceView implements Runnable {
                 start = false;
             }
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void draw2() {
+        if (ourHolder.getSurface().isValid()) {
+            canvas = ourHolder.lockCanvas();
+            canvas.drawColor(Color.argb(255, 0, 0, 0));
+            paint.setColor(Color.argb(255, 246, 1, 157));
+            paint.setTextSize(40);
+            paint.setTypeface(Typeface.create(context.getResources().getFont(R.font.lazer84), Typeface.NORMAL));
+            canvas.drawText("NEXT VAGUE",100,300,paint);
+            ourHolder.unlockCanvasAndPost(canvas);
+        }
+
     }
 
     public void pause(){
@@ -506,6 +516,25 @@ public class GameView extends SurfaceView implements Runnable {
     }
     public int getScore(){
         return this.score;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void checkInvaders(){
+        if(score ==  numberTotInvaders * 10){
+            if(paused == false){
+                paused = true;
+                draw2();
+                initNextLevel();
+
+            }
+            else if(paused == true){
+
+                numberTotInvaders = numberTotInvaders + numInvaders;
+                paused = false;
+            }
+
+            //initLevel();
+        }
     }
 
 }
