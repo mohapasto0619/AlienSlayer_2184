@@ -22,7 +22,7 @@ public class Background {
 
     public Background(Context context, int screenX, int screenY){
 
-        bitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.test);
+        bitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.starfield);
         height = bitmap.getHeight();
         length = bitmap.getWidth();
         this.screenY = screenY;

@@ -1,6 +1,8 @@
 package fr.mastersid.meghasli.alienslayer2184;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -62,6 +64,15 @@ public class GameView extends SurfaceView implements Runnable {
     volatile MutableLiveData<Boolean> isItGameOver;
     int numberTotInvaders=0;
 
+    private Bitmap bitmapInv1;
+    private Bitmap bitmapInv2;
+    private Bitmap bitmapInv3;
+    private Bitmap bitmapInv4;
+    private Bitmap[] bitmapEx;
+    float invLength;
+    float invHeight;
+    boolean isThereExplosion = false;
+
 
     public GameView(Context context, int x, int y) {
         super(context);
@@ -71,6 +82,34 @@ public class GameView extends SurfaceView implements Runnable {
         sound = new Sound(context);
         screenX = x;
         screenY = y;
+        invLength = screenX/6;
+        invHeight = screenY/10;
+
+        bitmapInv1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.invader4dr);
+        bitmapInv2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.invader4dl);
+        bitmapInv3 = BitmapFactory.decodeResource(context.getResources(),R.drawable.invader4ul);
+        bitmapInv4 = BitmapFactory.decodeResource(context.getResources(),R.drawable.invader4ud);
+        bitmapEx = new Bitmap[10];
+
+        bitmapEx[0]=BitmapFactory.decodeResource(context.getResources(),R.drawable.tile0);
+        bitmapEx[1]=BitmapFactory.decodeResource(context.getResources(),R.drawable.tile1);
+        bitmapEx[2]=BitmapFactory.decodeResource(context.getResources(),R.drawable.tile2);
+        bitmapEx[3]=BitmapFactory.decodeResource(context.getResources(),R.drawable.tile3);
+        bitmapEx[4]=BitmapFactory.decodeResource(context.getResources(),R.drawable.tile4);
+        bitmapEx[5]=BitmapFactory.decodeResource(context.getResources(),R.drawable.tile5);
+        bitmapEx[6]=BitmapFactory.decodeResource(context.getResources(),R.drawable.tile6);
+        bitmapEx[7]=BitmapFactory.decodeResource(context.getResources(),R.drawable.tile7);
+        bitmapEx[8]=BitmapFactory.decodeResource(context.getResources(),R.drawable.tile8);
+        bitmapEx[9]=BitmapFactory.decodeResource(context.getResources(),R.drawable.tile9);
+
+        bitmapInv1 =  Bitmap.createScaledBitmap(bitmapInv1, (int)(invLength), (int)(invHeight), false);
+        bitmapInv2 =  Bitmap.createScaledBitmap(bitmapInv2, (int)(invLength), (int)(invHeight), false);
+        bitmapInv3 =  Bitmap.createScaledBitmap(bitmapInv3, (int)(invLength), (int)(invHeight), false);
+        bitmapInv4 =  Bitmap.createScaledBitmap(bitmapInv4, (int)(invLength), (int)(invHeight), false);
+
+        for (int i =0; i<bitmapEx.length; i++){
+            bitmapEx[i] =  Bitmap.createScaledBitmap(bitmapEx[i], (int)(invLength), (int)(invHeight), false);
+        }
         //paused =false;
         initLevel();
         // impro
@@ -87,9 +126,10 @@ public class GameView extends SurfaceView implements Runnable {
         }
 
         numInvaders = 0;
-        for(int column = 0; column < 1; column ++ ){
-            for(int row = 0; row < 1; row ++ ){
+        for(int column = 0; column < 3; column ++ ){
+            for(int row = 0; row < 3; row ++ ){
                 invaders[numInvaders] = new Invader(context, row, column, screenX, screenY);
+                invaders[numInvaders].setBitmap(bitmapInv1,bitmapInv2,bitmapInv3,bitmapInv4,bitmapEx);
                 numInvaders ++;
             }
         }
@@ -116,6 +156,7 @@ public class GameView extends SurfaceView implements Runnable {
         for(int column = 0; column < 3; column ++ ){
             for(int row = 0; row < 5; row ++ ){
                 invaders[numInvaders] = new Invader(context, row, column, screenX, screenY);
+                invaders[numInvaders].setBitmap(bitmapInv1,bitmapInv2,bitmapInv3,bitmapInv4,bitmapEx);
                 numInvaders ++;
             }
         }
@@ -130,6 +171,7 @@ public class GameView extends SurfaceView implements Runnable {
 
             if (paused == false) {
                 update();
+                isThereExplosion= checkExplode();
             }
 
             draw();
@@ -172,6 +214,7 @@ public class GameView extends SurfaceView implements Runnable {
 
                         // Shot fired
                         // Prepare for the next shot
+                        sound.playLazer2Sound();
                         nextMissile = nextMissile + 3;
 
 
@@ -205,58 +248,47 @@ public class GameView extends SurfaceView implements Runnable {
         }
 
         if(bumpedRight){
-            if (!reverse) { // impro
+             // impro
                 for (int i = 0; i < numInvaders; i++) {
                     invaders[i].moveLeft();
-                    invaders[i].goDown();
+                    //invaders[i].goDown();
                     // Have the invaders landed
-                    if (invaders[i].getY() > screenY - screenY / 2) {
-                        //lost = true;
-                        reverse = true;
-                    }
                 }
-
-            } else { // impro
-                for (int i = 0; i < numInvaders; i++) {
-                    invaders[i].moveLeft();
-                    invaders[i].goUp();
-                    // Have the invaders landed
-                    if (invaders[i].getY() <= 0 + invaders[i].getHeight()) { //impro
-                        //lost = true;
-                        reverse = false;
-                    }
-                }
-
-            }
             bumpedRight =false;
         }
 
         if(bumpedLeft){
-            if (!reverse) { // impro
+             // impro
                 for (int i = 0; i < numInvaders; i++) {
                     invaders[i].moveRight();
-                    invaders[i].goDown();
+                    //invaders[i].goDown();
                     // Have the invaders landed
-                    if (invaders[i].getY() > screenY - screenY / 2) {
-                        //lost = true;
-                        reverse = true;
-                    }
                 }
+            bumpedLeft = false;
+        }
 
-            } else { // impro
-                for (int i = 0; i < numInvaders; i++) {
-                    invaders[i].moveRight();
-                    invaders[i].goUp();
-                    // Have the invaders landed
-                    if (invaders[i].getY() <= 0 + invaders[i].getHeight()) { //impro
-                        //lost = true;
-                        reverse = false;
-                    }
+        if (!reverse) { // impro
+            for (int i = 0; i < numInvaders; i++) {
+                //invaders[i].goDown();
+                invaders[i].moveDown();
+                // Have the invaders landed
+                if (invaders[i].getY() > screenY - screenY / 2) {
+                    //lost = true;
+                    reverse = true;
                 }
 
             }
-            bumpedLeft = false;
-
+        }
+        else{
+            for (int i = 0; i < numInvaders; i++) {
+                //invaders[i].goUp();
+                invaders[i].moveUp();
+                // Have the invaders landed
+                if (invaders[i].getY() <= 0 ) { //impro
+                    //lost = true;
+                    reverse = false;
+                }
+            }
         }
 
         /*if(bumped) {
@@ -309,9 +341,11 @@ public class GameView extends SurfaceView implements Runnable {
             for (int i = 0; i < numInvaders; i++) {
                 if (invaders[i].getVisibility()) {
                     if (RectF.intersects(missile.getRect(), invaders[i].getRect())) {
-                        invaders[i].setInvisible();
+                        //invaders[i].setInvisible();
+                        invaders[i].setExplode(true);
                         missile.setInactive();
                         score = score + 10;
+                        sound.playExplosion();
 
                         // Has the player win
                         /*if(score == numInvaders * 10){
@@ -401,9 +435,12 @@ public class GameView extends SurfaceView implements Runnable {
             canvas.drawBitmap(playerShip.getBitmap(),playerShip.getX(),screenY - 250, paint);
 
             for(int i = 0; i < numInvaders; i++){
-                if(invaders[i].getVisibility()) {
+                if(invaders[i].getVisibility() || invaders[i].getExplode() ) {
                     canvas.drawBitmap(invaders[i].getBitmap(), invaders[i].getX(), invaders[i].getY(), paint);
                 }
+                /*if(invaders[i].getExplode()){
+                    canvas.drawBitmap(invaders[i].getBitmap(), invaders[i].getX(), invaders[i].getY(), paint);
+                }*/
             }
 
             paint.setColor(Color.argb(255, 198, 0, 0));
@@ -520,10 +557,10 @@ public class GameView extends SurfaceView implements Runnable {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void checkInvaders(){
-        if(score ==  numberTotInvaders * 10){
+        if(score ==  numberTotInvaders * 10 && !isThereExplosion){
             if(paused == false){
                 paused = true;
-                draw2();
+                //draw2();
                 initNextLevel();
 
             }
@@ -535,6 +572,18 @@ public class GameView extends SurfaceView implements Runnable {
 
             //initLevel();
         }
+    }
+
+    public boolean checkExplode(){
+        boolean state = false;
+        for (int i = 0; i<numInvaders; i++){
+            if(invaders[i].getExplode()){
+                state = true;
+                break;
+            }
+
+        }
+        return state;
     }
 
 }
