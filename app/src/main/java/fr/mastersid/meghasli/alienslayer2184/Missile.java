@@ -1,5 +1,6 @@
 package fr.mastersid.meghasli.alienslayer2184;
 
+import android.graphics.Bitmap;
 import android.graphics.RectF;
 
 public class Missile {
@@ -20,6 +21,10 @@ public class Missile {
     private boolean isActive;
     private boolean explode ;
 
+    private Bitmap[] bitmapEx;
+    Bitmap bitmap;
+    int explodeId = 0;
+
     public Missile(int screenY){
         height = screenY/30;
         isActive = false;
@@ -27,6 +32,7 @@ public class Missile {
 
         rect = new RectF();
 
+        bitmapEx = new Bitmap[10];
     }
 
     public RectF getRect(){
@@ -39,6 +45,14 @@ public class Missile {
 
     public void setInactive(){
         isActive = false;
+    }
+
+    public float getX(){
+        return x;
+    }
+
+    public float getY(){
+        return y;
     }
 
     public float getImpactPointY(){
@@ -69,6 +83,15 @@ public class Missile {
         return explode;
     }
 
+    public void setBitmap(Bitmap[] bitmapEx){
+        this.bitmapEx = bitmapEx;
+        this.bitmap = bitmapEx[0];
+    }
+
+    public Bitmap getBitmap(){
+        return this.bitmap;
+    }
+
     public void update(long fps){
 
         if(heading == UP){
@@ -78,6 +101,16 @@ public class Missile {
             y = y + speed/fps;
         }
 
+        if(explode){
+            if (explodeId <10){
+                bitmap = bitmapEx[explodeId];
+                explodeId++;
+            }
+            else{
+                explode = false;
+                setInactive();
+            }
+        }
 
 
         rect.left = x;

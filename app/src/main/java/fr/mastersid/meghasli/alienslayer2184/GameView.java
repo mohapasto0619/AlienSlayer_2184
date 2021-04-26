@@ -123,6 +123,7 @@ public class GameView extends SurfaceView implements Runnable {
 
         for (int i=0; i<invadersMissile.length; i++){
             invadersMissile[i] = new Missile(screenY);
+            invadersMissile[i].setBitmap(bitmapEx);
         }
 
         numInvaders = 0;
@@ -161,6 +162,7 @@ public class GameView extends SurfaceView implements Runnable {
         if(level == 2){
             for (int i=0; i<invadersMissile.length; i++){
                 invadersMissile[i] = new Missile(screenY);
+                invadersMissile[i].setBitmap(bitmapEx);
             }
 
             numInvaders = 0;
@@ -418,10 +420,11 @@ public class GameView extends SurfaceView implements Runnable {
         }
 
         for(int i = 0; i < invadersMissile.length; i++){
-            if(invadersMissile[i].getStatus()){
+            if(invadersMissile[i].getStatus() && !invadersMissile[i].getExplode()){
                 if(RectF.intersects(playerShip.getRect(), invadersMissile[i].getRect())){
                     invadersMissile[i].setExplode(true);
-                    invadersMissile[i].setInactive();
+                    sound.playExplosion();
+                    //invadersMissile[i].setInactive();
                     lives --;
 
                     // Is it game over
@@ -475,9 +478,14 @@ public class GameView extends SurfaceView implements Runnable {
             }
 
             for(int i=0; i<invadersMissile.length; i++){
-                if(invadersMissile[i].getStatus()){
+                if(invadersMissile[i].getStatus() && invadersMissile[i].getExplode()){
+                    canvas.drawBitmap(invadersMissile[i].getBitmap(),invadersMissile[i].getX() - (invadersMissile[i].getBitmap().getWidth()/2)
+                            , invadersMissile[i].getY() - (invadersMissile[i].getBitmap().getHeight()/2),paint);
+                }
+                else if(invadersMissile[i].getStatus()){
                     canvas.drawRect(invadersMissile[i].getRect(),paint);
                 }
+
             }
 
             paint.setColor(Color.argb(255, 246, 1, 157));
