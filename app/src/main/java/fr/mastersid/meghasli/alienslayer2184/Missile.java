@@ -18,10 +18,12 @@ public class Missile {
     private int height;
 
     private boolean isActive;
+    private boolean explode ;
 
     public Missile(int screenY){
         height = screenY/30;
         isActive = false;
+        explode = false;
 
         rect = new RectF();
 
@@ -57,6 +59,14 @@ public class Missile {
             return true;
         }
         return false;
+    }
+
+    public void setExplode(boolean state){
+        explode = state;
+    }
+
+    public boolean getExplode(){
+        return explode;
     }
 
     public void update(long fps){

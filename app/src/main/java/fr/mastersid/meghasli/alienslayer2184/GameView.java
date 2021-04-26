@@ -126,12 +126,22 @@ public class GameView extends SurfaceView implements Runnable {
         }
 
         numInvaders = 0;
-        for(int column = 0; column < 3; column ++ ){
-            for(int row = 0; row < 3; row ++ ){
-                invaders[numInvaders] = new Invader(context, row, column, screenX, screenY);
-                invaders[numInvaders].setBitmap(bitmapInv1,bitmapInv2,bitmapInv3,bitmapInv4,bitmapEx);
-                numInvaders ++;
+        for(int row = 0; row < 3; row ++ ){
+            if(row % 2 == 0){
+                for(int column = 0; column< 2; column ++ ){
+                    invaders[numInvaders] = new Invader(context, row, column*2, screenX, screenY,500);
+                    invaders[numInvaders].setBitmap(bitmapInv1,bitmapInv2,bitmapInv3,bitmapInv4,bitmapEx);
+                    numInvaders ++;
+                }
             }
+            else {
+                for(int column = 0; column< 1; column ++ ){
+                    invaders[numInvaders] = new Invader(context, row, column+1, screenX, screenY,500);
+                    invaders[numInvaders].setBitmap(bitmapInv1,bitmapInv2,bitmapInv3,bitmapInv4,bitmapEx);
+                    numInvaders ++;
+                }
+                }
+
         }
         numberTotInvaders = numberTotInvaders + numInvaders;
 
@@ -147,19 +157,34 @@ public class GameView extends SurfaceView implements Runnable {
 
     }
 
-    public void initNextLevel(){
-        for (int i=0; i<invadersMissile.length; i++){
-            invadersMissile[i] = new Missile(screenY);
-        }
+    public void initNextLevel(int level){
+        if(level == 2){
+            for (int i=0; i<invadersMissile.length; i++){
+                invadersMissile[i] = new Missile(screenY);
+            }
 
-        numInvaders = 0;
-        for(int column = 0; column < 3; column ++ ){
-            for(int row = 0; row < 5; row ++ ){
-                invaders[numInvaders] = new Invader(context, row, column, screenX, screenY);
-                invaders[numInvaders].setBitmap(bitmapInv1,bitmapInv2,bitmapInv3,bitmapInv4,bitmapEx);
-                numInvaders ++;
+            numInvaders = 0;
+            for(int row = 0; row < 6; row ++ ){
+                if(row % 2 == 0){
+                    for(int column = 0; column< 2; column ++ ){
+                        invaders[numInvaders] = new Invader(context, row, column*2, screenX, screenY,50);
+                        invaders[numInvaders].setBitmap(bitmapInv1,bitmapInv2,bitmapInv3,bitmapInv4,bitmapEx);
+                        numInvaders ++;
+                    }
+                }
+                else {
+                    for(int column = 0; column< 1; column ++ ){
+                        invaders[numInvaders] = new Invader(context, row, column+1, screenX, screenY,50);
+                        invaders[numInvaders].setBitmap(bitmapInv1,bitmapInv2,bitmapInv3,bitmapInv4,bitmapEx);
+                        numInvaders ++;
+                    }
+                }
+
             }
         }
+
+
+
 
     }
 
@@ -395,6 +420,7 @@ public class GameView extends SurfaceView implements Runnable {
         for(int i = 0; i < invadersMissile.length; i++){
             if(invadersMissile[i].getStatus()){
                 if(RectF.intersects(playerShip.getRect(), invadersMissile[i].getRect())){
+                    invadersMissile[i].setExplode(true);
                     invadersMissile[i].setInactive();
                     lives --;
 
@@ -561,7 +587,7 @@ public class GameView extends SurfaceView implements Runnable {
             if(paused == false){
                 paused = true;
                 //draw2();
-                initNextLevel();
+                initNextLevel(2);
 
             }
             else if(paused == true){

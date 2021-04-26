@@ -38,8 +38,9 @@ public class Invader {
     boolean isVisible;
     boolean explode;
     int explodeId = 0;
+    int difficulty = 500;
 
-    public Invader(Context context, int row, int column, int screenX, int screenY){
+    public Invader(Context context, int row, int column, int screenX, int screenY, int difficulty){
         rect = new RectF();
 
         length = screenX/6;
@@ -53,43 +54,9 @@ public class Invader {
         x = column *length + padding;
         y = (row *length - screenY/2) + (padding/4);
 
-        /*bitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.invader4dr);
-        bitmap1 = BitmapFactory.decodeResource(context.getResources(),R.drawable.invader4dr);
-        bitmap2 = BitmapFactory.decodeResource(context.getResources(),R.drawable.invader4dl);
-        bitmap3 = BitmapFactory.decodeResource(context.getResources(),R.drawable.invader4ul);
-        bitmap4 = BitmapFactory.decodeResource(context.getResources(),R.drawable.invader4ud);*/
         bitmapEx = new Bitmap[10];
-
-        /*bitmapEx[0]=BitmapFactory.decodeResource(context.getResources(),R.drawable.tile0);
-        bitmapEx[1]=BitmapFactory.decodeResource(context.getResources(),R.drawable.tile1);
-        bitmapEx[2]=BitmapFactory.decodeResource(context.getResources(),R.drawable.tile2);
-        bitmapEx[3]=BitmapFactory.decodeResource(context.getResources(),R.drawable.tile3);
-        bitmapEx[4]=BitmapFactory.decodeResource(context.getResources(),R.drawable.tile4);
-        bitmapEx[5]=BitmapFactory.decodeResource(context.getResources(),R.drawable.tile5);
-        bitmapEx[6]=BitmapFactory.decodeResource(context.getResources(),R.drawable.tile6);
-        bitmapEx[7]=BitmapFactory.decodeResource(context.getResources(),R.drawable.tile7);
-        bitmapEx[8]=BitmapFactory.decodeResource(context.getResources(),R.drawable.tile8);
-        bitmapEx[9]=BitmapFactory.decodeResource(context.getResources(),R.drawable.tile9);*/
-
-        /*bitmap =  Bitmap.createScaledBitmap(bitmap, (int)(length), (int)(height), false);
-        bitmap1 =  Bitmap.createScaledBitmap(bitmap1, (int)(length), (int)(height), false);
-        bitmap2 =  Bitmap.createScaledBitmap(bitmap2, (int)(length), (int)(height), false);
-        bitmap3 =  Bitmap.createScaledBitmap(bitmap3, (int)(length), (int)(height), false);
-        bitmap4 =  Bitmap.createScaledBitmap(bitmap4, (int)(length), (int)(height), false);
-
-
-        bitmapEx[0] =  Bitmap.createScaledBitmap(bitmapEx[0], (int)(length), (int)(height), false);
-        bitmapEx[1] = Bitmap.createScaledBitmap(bitmapEx[1], (int)(length), (int)(height), false);
-        bitmapEx[2] = Bitmap.createScaledBitmap(bitmapEx[2], (int)(length), (int)(height), false);
-        bitmapEx[3] = Bitmap.createScaledBitmap(bitmapEx[3], (int)(length), (int)(height), false);
-        bitmapEx[4] = Bitmap.createScaledBitmap(bitmapEx[4], (int)(length), (int)(height), false);
-        bitmapEx[5] =  Bitmap.createScaledBitmap(bitmapEx[5], (int)(length), (int)(height), false);
-        bitmapEx[6] = Bitmap.createScaledBitmap(bitmapEx[6], (int)(length), (int)(height), false);
-        bitmapEx[7] = Bitmap.createScaledBitmap(bitmapEx[7], (int)(length), (int)(height), false);
-        bitmapEx[8] = Bitmap.createScaledBitmap(bitmapEx[8], (int)(length), (int)(height), false);
-        bitmapEx[9] = Bitmap.createScaledBitmap(bitmapEx[9], (int)(length), (int)(height), false);*/
-
-        shipSpeed = 120;
+        shipSpeed = 160;
+        this.difficulty = difficulty;
     }
 
     public void setInvisible(){
@@ -231,7 +198,7 @@ public class Invader {
         int randomNumber = -1;
         if ((playerShipX + playerShipLength > x && playerShipX + playerShipLength < x) ||
                 (playerShipX > x && playerShipX < x + length)){
-            randomNumber = generator.nextInt(500);
+            randomNumber = generator.nextInt(difficulty);
             if(randomNumber == 0){
                 return true;
             }
