@@ -318,7 +318,10 @@ public class ConnectionFragment extends Fragment {
         public void run() {
             try {
                 socket.connect(new InetSocketAddress(hostAdd, 8888),500);
+                Log.d("socket", "socket get port "+ socket.getPort());
                 outputStream = socket.getOutputStream();
+                inputStream = socket.getInputStream();
+                Log.d("socket", "outputstream : "+ outputStream);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -333,17 +336,21 @@ public class ConnectionFragment extends Fragment {
 
                     while(socket != null){
                         try {
-                            bytes = inputStream.read(buffer);
-                            if(bytes > 0){
-                                int finalBytes = bytes;
-                                handler.post(new Runnable(){
-                                    @Override
-                                    public void run() {
-                                        String tempMsg = new String(buffer,0,finalBytes);
-                                        binding.messageView.setText(tempMsg);
-                                    }
-                                });
+                            if(inputStream != null){
+                                bytes = inputStream.read(buffer);
+                                if(bytes > 0){
+                                    int finalBytes = bytes;
+                                    handler.post(new Runnable(){
+                                        @Override
+                                        public void run() {
+                                            String tempMsg = new String(buffer,0,finalBytes);
+                                            binding.messageView.setText(tempMsg);
+                                        }
+                                    });
+                                }
                             }
+
+
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
