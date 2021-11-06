@@ -29,6 +29,9 @@
         android:layout_marginTop="20sp"
         android:fontFamily="@font/lazer84"
         android:hint="Please enter your name"
+        android:textColor="@color/white"
+        android:inputType="textPersonName"
+        android:maxLength="6"
         android:textColorHint="#CFC9C9"
         android:textSize="20sp" />
 

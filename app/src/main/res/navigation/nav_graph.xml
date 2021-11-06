@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/menuFragment"
-        android:name="fr.mastersid.meghasli.alienslayer2184.MenuFragment"
+        android:name="fr.mastersid.meghasli.alienslayer2184.ui.fragment.MenuFragment"
         android:label="MenuFragment" >
         <action
             android:id="@+id/action_menuFragment_to_soloNameInputFragment"
@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/soloFragment"
-        android:name="fr.mastersid.meghasli.alienslayer2184.SoloFragment"
+        android:name="fr.mastersid.meghasli.alienslayer2184.ui.fragment.SoloFragment"
         android:label="SoloFragment" >
         <argument
             android:name="playerName"
@@ -35,7 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/soloNameInputFragment"
-        android:name="fr.mastersid.meghasli.alienslayer2184.SoloNameInputFragment"
+        android:name="fr.mastersid.meghasli.alienslayer2184.ui.fragment.SoloNameInputFragment"
         android:label="SoloNameInputFragment" >
         <action
             android:id="@+id/action_soloNameInputFragment_to_soloFragment"
@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/scoreFragment"
-        android:name="fr.mastersid.meghasli.alienslayer2184.ScoreFragment"
+        android:name="fr.mastersid.meghasli.alienslayer2184.ui.fragment.ScoreFragment"
         android:label="ScoreFragment" >
         <action
             android:id="@+id/action_scoreFragment_to_menuFragment"
@@ -51,7 +51,7 @@
     </fragment>
     <fragment
         android:id="@+id/optionsFragment"
-        android:name="fr.mastersid.meghasli.alienslayer2184.OptionsFragment"
+        android:name="fr.mastersid.meghasli.alienslayer2184.ui.fragment.OptionsFragment"
         android:label="OptionsFragment" >
         <action
             android:id="@+id/action_optionsFragment_to_menuFragment"
@@ -59,7 +59,7 @@
     </fragment>
     <fragment
         android:id="@+id/soloGameOverFragment"
-        android:name="fr.mastersid.meghasli.alienslayer2184.SoloGameOverFragment"
+        android:name="fr.mastersid.meghasli.alienslayer2184.ui.fragment.SoloGameOverFragment"
         android:label="SoloGameOverFragment" >
         <argument
             android:name="playerName"
@@ -73,7 +73,7 @@
     </fragment>
     <fragment
         android:id="@+id/connectionFragment"
-        android:name="fr.mastersid.meghasli.alienslayer2184.ConnectionFragment"
+        android:name="fr.mastersid.meghasli.alienslayer2184.ui.fragment.ConnectionFragment"
         android:label="ConnectionFragment" />
 
 </navigation>
